@@ -23,8 +23,8 @@
         min-height: 500px;
     }
 
-    .deadline {
-        background: #f8d7da !important;
+    .table tbody td.deadline {
+        background-color: #f8d7da !important;
         color: #842029 !important;
     }
 
@@ -99,11 +99,17 @@
 
                             <td>@task.Description</td>
 
-                            <td class="deadline">
+                            @{
+                                var timeLeft = task.Deadline - DateTime.Now;
+                                var isDeadlineNear = timeLeft.TotalHours <= 24;
+                            }
+
+                            <td class="@(isDeadlineNear ? "deadline" : "")">
                                 @task.Deadline.ToString("yyyy-MM-dd HH:mm")
                             </td>
 
                             <td>
+
                                 @if (!string.IsNullOrEmpty(task.FilePath))
                                 {
                                     <a asp-controller="Tasks"
@@ -117,6 +123,7 @@
                                 {
                                     <span class="text-muted">No file</span>
                                 }
+
                             </td>
 
                             <td>
@@ -160,8 +167,51 @@
 
         </table>
 
+
     </div>
 
  
+    @if ((int)ViewBag.TotalPages > 1)
+    {
+        <nav aria-label="Tasks pagination">
+            <ul class="pagination justify-content-center mt-3">
+
+                <li class="page-item @( (int)ViewBag.CurrentPage <= 1 ? "disabled" : "")">
+                    <a class="page-link"
+                       asp-controller="Tasks"
+                       asp-action="Index"
+                       asp-route-page="@((int)ViewBag.CurrentPage - 1)"
+                       asp-route-date="@Context.Request.Query["date"]">
+                        Previous
+                    </a>
+                </li>
+
+                @for (int i = 1; i <= (int)ViewBag.TotalPages; i++)
+                {
+                    <li class="page-item @(i == (int)ViewBag.CurrentPage ? "active" : "")">
+                        <a class="page-link"
+                           asp-controller="Tasks"
+                           asp-action="Index"
+                           asp-route-page="@i"
+                           asp-route-date="@Context.Request.Query["date"]">
+                            @i
+                        </a>
+                    </li>
+                }
+
+                <li class="page-item @( (int)ViewBag.CurrentPage >= (int)ViewBag.TotalPages ? "disabled" : "")">
+                    <a class="page-link"
+                       asp-controller="Tasks"
+                       asp-action="Index"
+                       asp-route-page="@((int)ViewBag.CurrentPage + 1)"
+                       asp-route-date="@Context.Request.Query["date"]">
+                        Next
+                    </a>
+                </li>
+
+            </ul>
+        </nav>
+    }
+
 
 </div>
