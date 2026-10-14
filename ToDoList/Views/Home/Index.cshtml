@@ -1,0 +1,125 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url('/images/background.jpg') center center / cover fixed no-repeat;
+        min-height: 100vh;
+    }
+
+    .home-container {
+        width: 86%;
+        max-width: 1200px;
+        min-height: 680px;
+        margin: 20px auto;
+        padding: 50px 35px;
+        box-sizing: border-box;
+        border-radius: 15px;
+        background: rgba(255, 255, 255, 0.94);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+        .home-container h1 {
+            font-size: clamp(32px, 4vw, 58px);
+            font-weight: bold;
+            color: #080808;
+            margin-bottom: 16px;
+        }
+
+    .description {
+        max-width: 650px;
+        color: #555;
+        font-size: 16px;
+        line-height: 1.7;
+        margin-bottom: 20px;
+    }
+
+    .tasks-button {
+        display: inline-block;
+        padding: 11px 15px;
+        background: linear-gradient(110deg, #087bfa, #6810ef);
+        color: white;
+        text-decoration: none;
+        border-radius: 7px;
+        font-size: 16px;
+        transition: 0.2s;
+    }
+
+        .tasks-button:hover {
+            opacity: 0.9;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+    .features {
+        max-width: 720px;
+        margin-top: 30px;
+        color: #171717;
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+        .features p {
+            margin-bottom: 14px;
+        }
+
+    @@media (max-width: 768px) {
+        .home-container {
+            width: 94%;
+            min-height: 600px;
+            padding: 30px 18px;
+        }
+
+            .home-container h1 {
+                font-size: 34px;
+            }
+    }
+</style>
+
+<main class="home-container">
+
+    <h1>Welcome to ToDoListApp</h1>
+
+    <p class="description">
+        Organize your tasks, manage deadlines, and track your progress
+        effortlessly. Our app helps you stay productive and focused every day.
+    </p>
+
+    <a asp-controller="Tasks"
+       asp-action="Index"
+       class="tasks-button">
+        View Your Tasks
+    </a>
+
+    <section class="features">
+
+        <p>
+            <strong>Why use ToDoListApp?</strong>
+            Because keeping track of your daily tasks shouldn't be a hassle.
+            With our clean and simple interface, you can add, edit, and delete
+            tasks with ease.
+        </p>
+
+        <p>
+            <strong>Stay on top of deadlines:</strong>
+            The app highlights urgent tasks so you never miss important deadlines.
+            You can filter by date and quickly see what's due soon.
+        </p>
+
+        <p>
+            <strong>File attachments:</strong>
+            Upload files to your tasks and access them directly from the app.
+            Everything is organized in one place for maximum efficiency.
+        </p>
+
+    </section>
+
+</main>

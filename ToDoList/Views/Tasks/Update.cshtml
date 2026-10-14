@@ -1,0 +1,71 @@
+﻿@model ToDoItem
+
+@{
+    ViewData["Title"] = "Edit Task";
+}
+
+<style>
+    .form-card {
+        width: 86%;
+        max-width: 1200px;
+        margin: 25px auto;
+        padding: 30px 35px;
+        border-radius: 15px;
+        background: rgba(255, 255, 255, 0.94);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    }
+</style>
+
+<div class="form-card">
+    <h2 class="mb-3">Edit Task</h2>
+
+    <form asp-action="Update" method="post" enctype="multipart/form-data">
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="FilePath" />
+
+        <div class="mb-3">
+            <label asp-for="Title" class="form-label">Title</label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Description" class="form-label">Description</label>
+            <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Deadline" class="form-label">Deadline</label>
+            <input asp-for="Deadline" type="datetime-local" class="form-control" />
+            <span asp-validation-for="Deadline" class="text-danger"></span>
+        </div>
+
+        @if (!string.IsNullOrEmpty(Model.FilePath))
+        {
+            <div class="mb-3">
+                <label class="form-label">Current File</label>
+                <div class="alert alert-info mb-0">
+                    📎 Current file:
+                    <a href="@Model.FilePath" target="_blank">Open</a> |
+                    <a asp-action="Download" asp-route-id="@Model.Id">Download</a>
+                </div>
+            </div>
+        }
+
+        <div class="mb-3">
+            <label class="form-label">Upload New File</label>
+            <input type="file" name="file" class="form-control" />
+        </div>
+
+        <button type="submit" class="btn btn-success">Update</button>
+        <a asp-action="Index" class="btn btn-secondary">Back</a>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
